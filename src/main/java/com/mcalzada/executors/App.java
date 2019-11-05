@@ -16,21 +16,8 @@ public class App
 {
     public static void main(String[] args) throws InterruptedException
     {
-        ExecutorService executors = Executors.newSingleThreadExecutor();
-
-        FutureTask futureT = (FutureTask) executors.submit(new ThreadTask());
-        Future<Boolean> callableFuture = executors.submit(new CallableTask());
-
-        Thread.sleep(1000);
-
-        futureT.run();
-
-        System.out.println(executors.isTerminated());
-
-        System.out.println(executors.isShutdown());
-
-        executors.shutdown();
-
-        System.out.println(executors.isShutdown());
+        new Thread(new AsyncTask()).start();
+        new Thread(new AsyncTask()).start();
+        new Thread(new AsyncTask()).start();
     }
 }

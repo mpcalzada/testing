@@ -29,10 +29,10 @@ public class Database
 
     static
     {
-        user = "ks_desa";
-        pass = "KSDesa1@";
-        base = "switchTest";
-        server = "192.168.1.30";
+        user = "usr";
+        pass = "pass";
+        base = "db";
+        server = "0.0.0.0";
         isInitialized = false;
 
     }
@@ -44,7 +44,11 @@ public class Database
         connectionPool.setPassword(pass);
         connectionPool.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         connectionPool.setUrl("jdbc:sqlserver://" + server + ";databaseName=" + base + ";user=" + user + ";password=" + pass);
-        connectionPool.setInitialSize(50);
+        connectionPool.setInitialSize(10);
+        connectionPool.setMaxTotal(30);
+        connectionPool.setMaxIdle(20);
+        connectionPool.setMinIdle(5);
+        connectionPool.setMaxWaitMillis(28000);
     }
 
     public void selectQuery()
@@ -55,18 +59,21 @@ public class Database
             {
                 cont++;
             }
-            System.out.println("Hash " + connection.hashCode() + "\t - " + cont);
+            System.out.println("Inicio " + connection.hashCode() + "\t - " + cont);
 
             Statement stmt = connection.createStatement();
 
             ResultSet rs = stmt.executeQuery("SELECT * FROM routers");
 
-            while (rs.next())
-            {
-                //datos
-            }
+            Thread.sleep(1000);
+
+            System.out.println("Fin" + connection.hashCode());
         }
         catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InterruptedException e)
         {
             e.printStackTrace();
         }

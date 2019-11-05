@@ -49,6 +49,12 @@ public class Conexion implements EventosTCP
 
     }
 
+    @Override
+    public void setLogger(Marker marker)
+    {
+
+    }
+
     public void enviarBFPROLAP(String msj)
     {
         conexion.enviar(msj);
